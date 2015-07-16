@@ -1,0 +1,69 @@
+#!/bin/sh
+set -e
+
+if [ ! -f ${TOOLBOX_PATH}/fft ] ; then
+
+	echo "\$TOOLBOX_PATH is not set correctly!"
+	exit 1
+fi
+
+RVC=0
+
+while getopts "c" opt; do
+	case $opt in
+	c)
+		RVC=1
+	;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+	;;
+	esac
+done
+
+shift $((OPTIND-1))
+
+
+if [ $# -lt 3 ] ; then
+
+	echo "Usage: $0 <kspace> <maps> <output>"
+	exit 1
+fi
+
+export PATH=$TOOLBOX_PATH:$PATH
+
+kspace=$(readlink -f "$1")
+maps=$(readlink -f "$2")
+output=$(readlink -f "$3")
+
+
+
+#WORKDIR=$(mktemp -d)
+# Mac: http://unix.stackexchange.com/questions/30091/fix-or-alternative-for-mktemp-in-os-x
+WORKDIR=`mktemp -d 2>/dev/null || mktemp -d -t 'mytmpdir'`
+trap 'rm -rf "$WORKDIR"' EXIT
+cd $WORKDIR
+
+# Alternative implementation using pocsense
+#pocsense 1. 1 $kspace $maps proj.coo
+#sub $kspace proj.coo diff.coo
+#fft -i -u 7 diff.coo idiff.coo
+#rss 8 idiff.coo $output
+
+fft -i -u 7 $kspace cimg.coo
+fmac -C -s8 cimg.coo $maps img.coo
+
+if [ $RVC = 1 ]; then
+
+	creal img.coo imgR.coo
+	fmac -s16 imgR.coo $maps proj.coo
+
+else
+
+	fmac -s16 img.coo $maps proj.coo
+
+fi
+
+saxpy -- -1. cimg.coo proj.coo idiff.coo
+rss 8 idiff.coo $output
+
+
