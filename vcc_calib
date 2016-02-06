@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ ! -f ${TOOLBOX_PATH}/fft ] ; then
+if [ ! -f ${TOOLBOX_PATH}/bart ] ; then
 
         echo "\$TOOLBOX_PATH is not set correctly!"
         exit 1
@@ -11,8 +11,9 @@ CROP=0.
 KRN=6
 REG=24
 LOW=20
+THRESH=0.001
 
-while getopts "c:k:r:l:" opt; do
+while getopts "c:k:r:l:t:" opt; do
 	case $opt in
 	l)
 		LOW=$OPTARG
@@ -25,6 +26,9 @@ while getopts "c:k:r:l:" opt; do
 	;;
 	r)
 		REG=$OPTARG
+	;;
+	t)
+		THRESH=$OPTARG
 	;;
 	\?)
 		echo "Invalid option: -$OPTARG" >&2
@@ -55,16 +59,18 @@ trap 'rm -rf "$WORKDIR"' EXIT
 cd $WORKDIR
 
 # create virtual conjugate channels
-flip 7 $kspace tmp1
-circshift 0 1 tmp1 tmp2
-circshift 1 1 tmp2 tmp1
-circshift 2 1 tmp1 tmp2
-conj tmp2 vcs
+bart flip 7 $kspace tmp1
+bart circshift 0 1 tmp1 tmp2
+bart circshift 1 1 tmp2 tmp1
+bart circshift 2 1 tmp1 tmp2
+bart conj tmp2 vcs
 
 
 # calibration
-join 3 $kspace vcs both
-ecalib -k${KRN} -r${REG} -S -c${CROP} both bsens val
+bart join 3 $kspace vcs both
+
+
+bart ecalib -k${KRN} -r${REG} -t${THRESH} -S -c${CROP} both bsens val
 rm both.*
 
 
@@ -72,36 +78,36 @@ rm both.*
 # phase centering - rotate phase up to sign
 COILS=$(cat bsens.hdr | tail -n1 | cut -d" " -f4)
 HCOILS=$(expr ${COILS} \/ 2)
-HCOILSM=$(expr ${COILS} \/ 2 - 1)
+export HCOILSM=$(expr ${COILS} \/ 2 - 1)
 COILSM=$(expr ${COILS} - 1)
 
-extract 3 0 ${HCOILSM} bsens maps1.coo
-extract 3 ${HCOILS} ${COILSM} bsens maps2.coo
-fmac -s8 maps1.coo maps2.coo rel.coo
-cpyphs rel.coo ph.coo
-spow 0.5 ph.coo phsqrt.coo
-fmac -C maps1.coo phsqrt.coo sens
+
+bart extract 3 0 ${HCOILSM} bsens maps1.coo
+bart extract 3 ${HCOILS} ${COILSM} bsens maps2.coo
+bart fmac -s8 maps1.coo maps2.coo rel.coo
+bart cpyphs rel.coo ph.coo
+bart spow 0.5 ph.coo phsqrt.coo
+bart fmac -C maps1.coo phsqrt.coo sens
 
 rm bsens.*
 
 
 
 # extract low resolution phase
-caldir ${LOW} $kspace sensLR
-cpyphs sensLR ph
+bart caldir ${LOW} $kspace sensLR
+bart cpyphs sensLR ph
 rm sensLR.*
 
-scale  -- 1.i ph phi
-join 4 ph phi phc
+bart scale  -- 1.i ph phi
+bart join 4 ph phi phc
 rm ph.* phi.*
 
 
-
 # align sign
-fmac -s8 -C sens phc tmp1.coo
-creal tmp1.coo tmp2.coo
-cpyphs tmp2.coo tmp1.coo
-fmac sens tmp1.coo $maps
+bart fmac -s8 -C sens phc tmp1.coo
+bart creal tmp1.coo tmp2.coo
+bart cpyphs tmp2.coo tmp1.coo
+bart fmac sens tmp1.coo $maps
 
 
 

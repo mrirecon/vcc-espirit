@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ ! -f ${TOOLBOX_PATH}/fft ] ; then
+if [ ! -f ${TOOLBOX_PATH}/bart ] ; then
 
 	echo "\$TOOLBOX_PATH is not set correctly!"
 	exit 1
@@ -49,21 +49,21 @@ cd $WORKDIR
 #fft -i -u 7 diff.coo idiff.coo
 #rss 8 idiff.coo $output
 
-fft -i -u 7 $kspace cimg.coo
-fmac -C -s8 cimg.coo $maps img.coo
+bart fft -i -u 7 $kspace cimg.coo
+bart fmac -C -s8 cimg.coo $maps img.coo
 
 if [ $RVC = 1 ]; then
 
-	creal img.coo imgR.coo
-	fmac -s16 imgR.coo $maps proj.coo
+	bart creal img.coo imgR.coo
+	bart fmac -s16 imgR.coo $maps proj.coo
 
 else
 
-	fmac -s16 img.coo $maps proj.coo
+	bart fmac -s16 img.coo $maps proj.coo
 
 fi
 
-saxpy -- -1. cimg.coo proj.coo idiff.coo
-rss 8 idiff.coo $output
+bart saxpy -- -1. cimg.coo proj.coo idiff.coo
+bart rss 8 idiff.coo $output
 
 
