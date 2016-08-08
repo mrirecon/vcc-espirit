@@ -25,25 +25,25 @@ bart rss 8 full_s full_r
 bart saxpy -- -1. full_r full_r full_diff
 
 bart fmac -s16 reco_1map sens0 pfppi_1map_s
-bart rss 8 reco_1map_s pfppi_1map_r
-bart saxpy -- -1. reco_1map_r full_r pfppi_1map_diff
+bart rss 8 pfppi_1map_s pfppi_1map_r
+bart saxpy -- -1. pfppi_1map_r full_r pfppi_1map_diff
 
 bart fmac -s16 reco_2maps sens pfppi_2maps_s
-bart rss 8 reco_2maps_s pfppi_2maps_r
-bart saxpy -- -1. reco_2maps_r full_r pfppi_2maps_diff
+bart rss 8 pfppi_2maps_s pfppi_2maps_r
+bart saxpy -- -1. pfppi_2maps_r full_r pfppi_2maps_diff
 
 bart fmac -s16 reco_l2 sens0 pfppi_l2_s
-bart rss 8 reco_l2_s pfppi_l2_r
-bart saxpy -- -1. reco_l2_r full_r pfppi_l2_diff
+bart rss 8 pfppi_l2_s pfppi_l2_r
+bart saxpy -- -1. pfppi_l2_r full_r pfppi_l2_diff
 
 
 # create figure 5
-bart join 2  reco_l2_r pfppi_2maps_r pfppi_1map_r full_r flp0
-bart join 2 reco_l2_diff pfppi_2maps_diff pfppi_1map_diff full_diff flp1
+bart join 2  pfppi_l2_r pfppi_2maps_r pfppi_1map_r full_r flp0
+bart join 2 pfppi_l2_diff pfppi_2maps_diff pfppi_1map_diff full_diff flp1
 bart scale 5. flp1 flp1S
 bart join 1 flp1S flp0 flp
 bart flip 7 flp figure5
 
-rm reco_* full_* sens.* sens0.* flp0.* flp1.* flp.* flp1S.*
+rm reco_* pfppi_* full_* sens.* sens0.* flp0.* flp1.* flp.* flp1S.*
 
 

@@ -76,7 +76,7 @@ rm both.*
 
 
 # phase centering - rotate phase up to sign
-COILS=$(cat bsens.hdr | tail -n1 | cut -d" " -f4)
+COILS=$(bart show -d 3 bsens)
 HCOILS=$(expr ${COILS} \/ 2)
 export HCOILSM=$(expr ${COILS} \/ 2 - 1)
 COILSM=$(expr ${COILS} - 1)
