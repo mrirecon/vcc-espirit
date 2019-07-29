@@ -24,22 +24,22 @@ bart fft -u -i 7 ${FULL} full_s
 bart rss 8 full_s full_r
 bart saxpy -- -1. full_r full_r full_diff
 
-bart fmac -s16 reco_1map sens0 pfppi_1map_s
-bart rss 8 reco_1map_s pfppi_1map_r
-bart saxpy -- -1. reco_1map_r full_r pfppi_1map_diff
+bart fmac -s16 reco_1map sens0 reco_1map_s
+bart rss 8 reco_1map_s reco_1map_r
+bart saxpy -- -1. reco_1map_r full_r reco_1map_diff
 
-bart fmac -s16 reco_2maps sens pfppi_2maps_s
-bart rss 8 reco_2maps_s pfppi_2maps_r
-bart saxpy -- -1. reco_2maps_r full_r pfppi_2maps_diff
+bart fmac -s16 reco_2maps sens reco_2maps_s
+bart rss 8 reco_2maps_s reco_2maps_r
+bart saxpy -- -1. reco_2maps_r full_r reco_2maps_diff
 
-bart fmac -s16 reco_l2 sens0 pfppi_l2_s
-bart rss 8 reco_l2_s pfppi_l2_r
-bart saxpy -- -1. reco_l2_r full_r pfppi_l2_diff
+bart fmac -s16 reco_l2 sens0 reco_l2_s
+bart rss 8 reco_l2_s reco_l2_r
+bart saxpy -- -1. reco_l2_r full_r reco_l2_diff
 
 
 # create figure 5
-bart join 2  reco_l2_r pfppi_2maps_r pfppi_1map_r full_r flp0
-bart join 2 reco_l2_diff pfppi_2maps_diff pfppi_1map_diff full_diff flp1
+bart join 2 reco_l2_r reco_2maps_r reco_1map_r full_r flp0
+bart join 2 reco_l2_diff reco_2maps_diff reco_1map_diff full_diff flp1
 bart scale 5. flp1 flp1S
 bart join 1 flp1S flp0 flp
 bart flip 7 flp figure5
