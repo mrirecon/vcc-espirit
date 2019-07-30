@@ -20,7 +20,7 @@ bart join 4 coil_images_scaled phase_diff sens_maps0 sens_maps1 flp
 bart flip 7 flp figure2b_all
 
 # extract first eight channels
-bart extract 3 0 7 figure2b_all figure2b
+bart extract 3 0 8 figure2b_all figure2b
 
 
 rm flp.* coil_images* phase.* phase_diff.* sens_maps*

@@ -76,14 +76,12 @@ rm both.*
 
 
 # phase centering - rotate phase up to sign
-COILS=$(cat bsens.hdr | tail -n1 | cut -d" " -f4)
+COILS=$(bart show -d3 bsens)
 HCOILS=$(expr ${COILS} \/ 2)
-export HCOILSM=$(expr ${COILS} \/ 2 - 1)
-COILSM=$(expr ${COILS} - 1)
 
 
-bart extract 3 0 ${HCOILSM} bsens maps1.coo
-bart extract 3 ${HCOILS} ${COILSM} bsens maps2.coo
+bart extract 3 0 ${HCOILS} bsens maps1.coo
+bart extract 3 ${HCOILS} ${COILS} bsens maps2.coo
 bart fmac -s8 maps1.coo maps2.coo rel.coo
 bart cpyphs rel.coo ph.coo
 bart spow 0.5 ph.coo phsqrt.coo
