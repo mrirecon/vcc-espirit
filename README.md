@@ -14,6 +14,11 @@ in the git history - required the version v0.3.01 [2].
 All versions of BART are available on GitHub [3].
 
 
+Try in your browser:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mrirecon/vcc-espirit/master?filepath=run.ipynb)
+
+
 
 
 
