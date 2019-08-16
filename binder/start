@@ -2,4 +2,9 @@
 cd bart
 . startup.sh
 cd ..
+function imshow () {
+	bart toimg $1 $1.png > /dev/null
+	cat $1.png | display
+	rm $1.png
+}
 exec "$@"
