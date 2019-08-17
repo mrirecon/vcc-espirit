@@ -25,3 +25,7 @@ Try in your browser:
 [1] BART: version 0.4.04 (2018) DOI: 10.5281/zenodo.2149128
 [2] BART: version 0.3.01 (2016) DOI: 10.5281/zenodo.50726
 [3] https://mrirecon.github.io/bart
+
+
+[![BART](./bart.svg)](https://mrirecon.github.io/bart)
+
