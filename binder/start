@@ -7,4 +7,5 @@ function imshow () {
 	cat $1.png | display
 	rm $1.png
 }
+export -f imshow
 exec "$@"
