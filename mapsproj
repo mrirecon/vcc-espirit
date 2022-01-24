@@ -1,11 +1,13 @@
 #!/bin/sh
 set -e
 
-if [ ! -f ${TOOLBOX_PATH}/bart ] ; then
-
-	echo "\$TOOLBOX_PATH is not set correctly!"
+if [ ! -e $TOOLBOX_PATH/bart ] ; then
+	echo "\$TOOLBOX_PATH is not set correctly!" >&2
 	exit 1
 fi
+export PATH=$TOOLBOX_PATH:$PATH
+export BART_COMPAT_VERSION="v0.4.04"
+
 
 RVC=0
 
@@ -28,8 +30,6 @@ if [ $# -lt 3 ] ; then
 	echo "Usage: $0 <kspace> <maps> <output>"
 	exit 1
 fi
-
-export PATH=$TOOLBOX_PATH:$PATH
 
 kspace=$(readlink -f "$1")
 maps=$(readlink -f "$2")
