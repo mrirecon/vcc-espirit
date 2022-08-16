@@ -13,6 +13,8 @@ The previous version of these scripts  - which you can find
 in the git history - required the version v0.3.01 [2].
 All versions of BART are available on GitHub [3].
 
+Total runtime of all scripts is aroung 45 minutes.
+
 
 Try in your browser:
 
