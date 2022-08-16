@@ -8,7 +8,8 @@ fi
 export PATH=$TOOLBOX_PATH:$PATH
 export BART_COMPAT_VERSION="v0.4.04"
 
-DATA=data/slice-full
+
+DATA=../data/slice-full
 CALIB=24
 KERN=6
 
@@ -19,11 +20,11 @@ bart ecalib -k${KERN} -r${CALIB} ${DATA} sens_ESP
 for c in 16 24 32 40; do
 	for k in 4 6 8 10; do
 
-	./vcc_calib -k${k} -c0. -r$c ${DATA} sens_VCE${c}x${k}
+	../vcc_calib -k${k} -c0. -r$c ${DATA} sens_VCE${c}x${k}
 	bart normalize 8 sens_VCE${c}x${k} sens_VCE${c}x${k}_norm
 	bart slice 4 0 sens_VCE${c}x${k}_norm sens_VCE${c}x${k}_norm0
-	./mapsproj -c ${DATA} sens_VCE${c}x${k}_norm proj_VCE${c}x${k}_norm
-	./mapsproj -c ${DATA} sens_VCE${c}x${k}_norm0 proj_VCE${c}x${k}_norm0
+	../mapsproj -c ${DATA} sens_VCE${c}x${k}_norm proj_VCE${c}x${k}_norm
+	../mapsproj -c ${DATA} sens_VCE${c}x${k}_norm0 proj_VCE${c}x${k}_norm0
 	done
 done
 
@@ -31,8 +32,8 @@ done
 bart fft -i -u 7 ${DATA} coil_images
 bart rss 8 coil_images rss
 
-./mapsproj -c ${DATA} sens_lowres   proj_lowres
-./mapsproj  ${DATA} sens_ESP proj_ESP
+../mapsproj -c ${DATA} sens_lowres   proj_lowres
+../mapsproj  ${DATA} sens_ESP proj_ESP
 
 bart scale 0.2 rss rssS
 

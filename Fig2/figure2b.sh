@@ -10,14 +10,14 @@ export BART_COMPAT_VERSION="v0.4.04"
 
 
 # VCC-ESPIRiT calibration
-./vcc_calib -k6 -c0.85 -r24 data/slice-full sens_maps
+../vcc_calib -k6 -c0.85 -r24 ../data/slice-full sens_maps
 
 # extract first to set of maps
 bart slice 4 0 sens_maps sens_maps0
 bart slice 4 1 sens_maps sens_maps1
 
 # create coil images
-bart fft -i -u 7 data/slice-full coil_images
+bart fft -i -u 7 ../data/slice-full coil_images
 bart scale 100. coil_images coil_images_scaled
 
 # compute phase difference

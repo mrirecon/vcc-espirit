@@ -11,11 +11,11 @@ export BART_COMPAT_VERSION="v0.4.04"
 CALIB=24
 KERN=6
 
-DATA=data/slice-x3pf58r24
-FULL=data/slice-full
+DATA=../data/slice-x3pf58r24
+FULL=../data/slice-full
 
 bart caldir 24 ${FULL} sens_dir
-./vcc_calib -k${KERN} -c0.85 -t0.001 -r${CALIB} ${DATA} sens
+../vcc_calib -k${KERN} -c0.85 -t0.001 -r${CALIB} ${DATA} sens
 
 bart slice 4 0 sens sens0
 

@@ -11,11 +11,11 @@ export BART_COMPAT_VERSION="v0.4.04"
 CALIB=24
 KERN=6
 
-DATA=data/slice2-x3
-FULL=data/slice2-full
+DATA=../data/slice2-x3
+FULL=../data/slice2-full
 
 # estimate sensitivities with VCC-ESPIRiT
-./vcc_calib -k${KERN} -c0.85 -t0.001 -r${CALIB} ${DATA} sens
+../vcc_calib -k${KERN} -c0.85 -t0.001 -r${CALIB} ${DATA} sens
 
 # extract first (0th) set of maps
 bart slice 4 0 sens sens0
