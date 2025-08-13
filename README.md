@@ -1,3 +1,9 @@
+**The main repository moved to: https://gitlab.tugraz.at/ibi/mrirecon/papers/vcc-espirit**
+
+**Please check there for updates.**
+
+
+
 
 
 These scripts reproduce the experiments described in the article:
